@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King Search Project - Legal & Attribution Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: "Warm Neutral" - A calming palette using #F5F5F4 (stone-100) as the base, #44403C (stone-700) for text, #A8A29E (stone-400) for borders/subtle text, and #3B82F6 (blue-500) as a gentle accent for interactive elements. This creates a professional, serene, and focused environment suitable for legal and technical documentation. -->
+
+    <!-- Application Structure Plan: The page is structured with a fixed top navigation for the three core sections: 'License', 'Credits', and 'Legal Compliance', allowing direct jumps to each. Within each main section, sub-sections and tables from the document are encapsulated within expandable accordions to manage content density and improve readability. The 'Legal Compliance' section utilizes a tabbed interface for its major sub-topics (Data Privacy, IP, etc.), further organizing complex information. This design prioritizes user-friendly navigation and on-demand detail access, turning a static document into an interactive, explorable resource. -->
+
+    <!-- Visualization & Content Choices:
+        - Content: All textual content from the document. -> Goal: Inform -> Viz/Method: Direct text display within sections and accordions. -> Interaction: Accordion toggle for detail reveal, tab switching. -> Justification: Breaks down dense text into manageable, clickable segments. Library/Method: HTML/CSS/JS.
+        - Content: Tables (Table 1, 2, 3, 4, 5) -> Goal: Inform/Compare/Organize -> Viz/Method: HTML tables. -> Interaction: Embedded within accordions for progressive disclosure. -> Justification: Presents structured data clearly, while accordions prevent initial visual overload. Library/Method: HTML/CSS.
+        - Interactive Elements: Accordions, Tabs. -> Goal: Enhance Navigation/User Control -> Viz/Method: Styled buttons and collapsible content areas. -> Interaction: Click to expand/collapse or switch tabs. -> Justification: Improves readability of long sections by allowing users to selectively view details. Library/Method: HTML/JS.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F4; color: #44403C; }
+        .nav-button { transition: all 0.2s ease-in-out; }
+        .nav-button.active { color: #FFFFFF; background-color: #3B82F6; }
+        .nav-button:not(.active):hover { background-color: #E7E5E4; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
+        .accordion-icon { transition: transform 0.3s ease-in-out; }
+        .accordion-toggle[aria-expanded="true"] .accordion-icon { transform: rotate(180deg); }
+        .tab-button.active { border-color: #3B82F6; color: #3B82F6; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        /* Responsive table styling */
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .table-responsive table { width: 100%; border-collapse: collapse; }
+        .table-responsive th, .table-responsive td { padding: 8px 12px; border: 1px solid #e7e5e4; text-align: left; vertical-align: top; }
+        .table-responsive th { background-color: #f8f8f8; font-weight: 600; color: #44403C; }
+        .table-responsive tr:nth-child(even) { background-color: #fdfdfd; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="min-h-screen">
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-10 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-8 h-8 bg-stone-700 rounded-full flex items-center justify-center text-white font-bold text-lg">K</span>
+                        <h1 class="text-2xl font-bold text-stone-800">King Search Project</h1>
+                    </div>
+                    <nav class="hidden md:flex items-center space-x-2 bg-stone-200 p-1 rounded-full">
+                        <button data-target="introduction" class="nav-button active px-4 py-2 text-sm font-semibold text-stone-600 rounded-full">Introduction</button>
+                        <button data-target="license-section" class="nav-button px-4 py-2 text-sm font-semibold text-stone-600 rounded-full">License</button>
+                        <button data-target="credits-section" class="nav-button px-4 py-2 text-sm font-semibold text-stone-600 rounded-full">Credits</button>
+                        <button data-target="compliance-section" class="nav-button px-4 py-2 text-sm font-semibold text-stone-600 rounded-full">Legal Compliance</button>
+                    </nav>
+                     <div class="md:hidden">
+                        <select id="mobile-nav" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="introduction">Introduction</option>
+                            <option value="license-section">License</option>
+                            <option value="credits-section">Credits</option>
+                            <option value="compliance-section">Legal Compliance</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+            <!-- Introduction Section -->
+            <section id="introduction" class="content-section active bg-white p-8 rounded-2xl shadow-lg mb-12">
+                <h2 class="text-4xl font-bold text-stone-800 mb-6">Essential Legal and Attribution Documentation for the "King Search Project"</h2>
+                <p class="text-lg text-stone-600 mb-4">This report provides a comprehensive framework for establishing robust legal and attribution documentation for the "King Search Project." The objective is to detail the creation of `LICENSE.md`, `CREDITS.md`, and `LEGAL_COMPLIANCE.md` files, which are crucial for any open-source initiative. For a complex undertaking such as a search engine, proper documentation is not merely a formality; it is foundational for ensuring legal adherence, fostering community trust, and streamlining project management.</p>
+                <p class="text-lg text-stone-600">The "King Search Project" is envisioned as an open-source search application. This inherent nature necessitates specific considerations that extend beyond those of typical software projects. These include intricate aspects related to data handling, intellectual property concerning indexed content, and user accessibility. The documents outlined herein will lay the groundwork for a legally sound and community-friendly project, enabling its sustainable development and widespread adoption.</p>
+            </section>
+
+            <!-- LICENSE.md Section -->
+            <section id="license-section" class="content-section bg-white p-8 rounded-2xl shadow-lg mb-12">
+                <h2 class="text-4xl font-bold text-stone-800 mb-6">2. LICENSE.md: Defining Your Project's Permissions</h2>
+                <p class="text-lg text-stone-600 mb-4">The `LICENSE.md` file is the cornerstone of an open-source project, explicitly defining the permissions and restrictions under which the software can be used, modified, and distributed. These permissions are granted subject to specific conditions.[1] Open-source licenses are formally approved by authoritative organizations such as the Open Source Initiative (OSI) and the Free Software Foundation (FSF), which collectively define the landscape of Free and Open Source Software (FOSS).[2]</p>
+
+                <div class="space-y-6">
+                    <!-- Understanding Open Source Licenses Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Understanding Open Source Licenses</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Open source licenses generally fall into two main categories: permissive and copyleft. Permissive licenses, exemplified by the MIT License, Apache License 2.0, and BSD licenses, grant broad freedoms with minimal restrictions.[3, 4, 5, 6, 7] They typically allow the integration of the licensed code into proprietary software without requiring the derivative work to be open source. This flexibility often encourages widespread adoption and commercial utilization of the software. In contrast, copyleft licenses, such as the GNU General Public License (GPLv3), are more restrictive. They leverage copyright law to ensure that any derivative work or modified version is also distributed under the same open-source terms, thereby preventing it from becoming proprietary.[7, 8, 9] While copyleft licenses foster a strong "free software" ecosystem and promote collaborative improvement, their restrictive nature can sometimes deter commercial entities that prefer to keep their modifications closed-source.</p>
+                            <p class="pt-4 text-stone-600">Several key considerations influence the choice of an open-source license for a project like "King Search." Commercial use is a primary factor, as many FOSS licenses, including MIT and Apache, explicitly permit commercial applications.[2, 3, 4, 6] This allowance is vital for a search engine that could be integrated into commercial products or services, or itself offer commercial features. Patent protection is another critical differentiator. Licenses like Apache 2.0 explicitly grant patent rights to users, which is a significant advantage for projects operating in intellectual property-sensitive domains, offering users protection against patent claims from contributors.[3, 4, 10, 11, 12] The MIT License, while broadly permissive, does not contain an express patent license, although some interpretations consider its broad nature to imply a waiver of patent rights.[13] Given the potential for patentable algorithms or innovative features within a search engine, this distinction is crucial. Finally, the balance between community engagement and commercial adoption plays a role. Permissive licenses generally lower the barrier to entry for both individual developers and large companies, encouraging wider integration into proprietary systems.[3, 4, 6] Copyleft licenses, while fostering a dedicated "free software" community, may limit the participation of commercial entities due to their share-alike requirements.[8]</p>
+                        </div>
+                    </div>
+
+                    <!-- Recommended License Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Recommended License for "King Search Project"</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">For the "King Search Project," which aims for widespread adoption and potential commercial integration, a permissive license is generally recommended. Among the permissive options, the **Apache License 2.0** is particularly well-suited due to its explicit grant of patent rights and its clear, comprehensive legal text.[3, 4, 11]</p>
+                            <p class="pt-4 text-stone-600">The decision to choose the Apache License 2.0 is rooted in several advantages. The explicit **patent grant** is a significant benefit. A search engine project may involve novel algorithms, data processing methods, or indexing techniques that could be subject to patents. The Apache 2.0 license's explicit patent grant protects users and contributors from patent litigation related to the software, which is a substantial advantage over licenses like MIT.[3, 4, 12] This provision offers a layer of legal security that is highly valued in the technology sector. Furthermore, the Apache 2.0 license is highly **commercial friendly**. It permits commercial use, modification, distribution, and sublicensing, allowing companies to integrate "King Search Project" into their proprietary software without being compelled to disclose their modifications.[4, 10] This flexibility encourages adoption by larger enterprises and facilitates the development of commercial products built upon the "King Search Project" foundation. While more verbose than the MIT License, Apache 2.0's **clearer legal text** provides greater legal clarity, which is beneficial for a project with complex functionalities like a search engine.[4] Its **attribution requirements** mandate the retention of copyright, patent, trademark, and attribution notices, and the inclusion of a `NOTICE` file if one exists, ensuring proper credit is given while maintaining the overall flexibility of the license.[4, 11]</p>
+                            <p class="pt-4 text-stone-600">The choice of license for an open-source project transcends mere legal compliance; it represents a strategic decision that profoundly impacts the project's growth trajectory and its surrounding ecosystem. Many open-source projects encounter challenges from patent claims or companies asserting infringement. By adopting the Apache License 2.0, the "King Search Project" proactively mitigates this risk for both its users and contributors. This foresight positions the project as a more attractive and legally secure dependency for other software initiatives. The explicit patent grant in Apache 2.0 directly addresses a common apprehension among businesses considering the adoption of open-source components, differentiating it from simpler permissive licenses like MIT.[3, 4, 12, 13] This approach moves beyond basic adherence to legal requirements, embodying active risk management and a thoughtful market positioning strategy.</p>
+                        </div>
+                    </div>
+
+                    <!-- Structure and Content of LICENSE.md Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Structure and Content of `LICENSE.md`</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">The `LICENSE.md` file should be located at the root of the project repository.[3, 14, 15] It must contain the complete, unaltered text of the chosen license, in this case, the Apache License 2.0.[11, 12] At the beginning of the license text, it is essential to include the specific copyright notice for "King Search Project," replacing generic placeholders such as `&lt;YEAR&gt;` and `&lt;COPYRIGHT HOLDER&gt;` with the actual year and copyright holder information.[11, 13, 16] Additionally, for individual source code files, particularly public APIs or widely shared libraries, a concise license notice should be placed at the top of each file, clearly referencing the main `LICENSE.md` file for full details.[3, 15]</p>
+                            <p class="text-stone-600 mt-4">For the "King Search Project", the copyright notice in `LICENSE.md` should be:</p>
+                            <pre class="bg-stone-100 p-4 rounded-lg text-sm text-stone-700 overflow-x-auto mt-2">Copyright 2025 MD Asaduzzaman Sarkar</pre>
+                        </div>
+                    </div>
+
+                    <!-- Managing Contributions Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Managing Contributions: Contributor License Agreements (CLAs) and Developer Certificate of Origin (DCO)</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">To ensure that all contributions to "King Search Project" are properly licensed under the Apache 2.0 terms, it is highly advisable to implement a formal mechanism for contributors to agree to these terms. Two common approaches are Contributor License Agreements (CLAs) and the Developer Certificate of Origin (DCO). A **Contributor License Agreement (CLA)** is a formal legal document where contributors grant the necessary rights (e.g., copyright and patent licenses) to the project maintainers or a designated legal entity.[17] This provides robust legal certainty for the project, which is particularly important for large-scale initiatives or those with corporate backing. A **Developer Certificate of Origin (DCO)** offers a simpler, less formal alternative. Under a DCO, contributors add a `Signed-off-by:` line to their commits, certifying that they have the right to submit the code under the project's license.[17] This approach is widely used in projects such as the Linux Kernel.</p>
+                            <p class="pt-4 text-stone-600">The implementation of a CLA or DCO is not merely an administrative step; it is a critical component of establishing clear legal hygiene from the project's inception. While many open-source repositories operate on the implicit understanding that contributions are made under the project's declared license, larger or more mature projects often benefit from these explicit agreements.[17] This practice proactively minimizes legal risks associated with intellectual property ownership of contributions, preventing potential disputes down the line, such as claims of "innocent infringement" that might arise if a contributor later asserts rights over their code.[17] By providing clear rules and a formal acknowledgment process, a CLA or DCO builds trust within the contributor community. It safeguards the project's ability to distribute the combined work without future legal encumbrances, thereby ensuring its long-term viability and attractiveness for both users and future contributors. This approach transforms legal compliance from a reactive necessity into a proactive strategy for risk mitigation and effective community governance.</p>
+                        </div>
+                    </div>
+
+                    <!-- Table 1 Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Table 1: Comparison of Recommended Open Source Licenses for Software</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="pt-4 table-responsive">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>License Name</th>
+                                            <th>Permissiveness</th>
+                                            <th>Commercial Use Allowed</th>
+                                            <th>Patent Grant</th>
+                                            <th>Requires Source Disclosure of Modifications</th>
+                                            <th>Attribution Requirements</th>
+                                            <th>Compatibility with Other Licenses</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>**MIT License**</td>
+                                            <td>Permissive</td>
+                                            <td>Yes [2, 3]</td>
+                                            <td>Implicit [13]</td>
+                                            <td>No [3]</td>
+                                            <td>Include original copyright and license text [3, 13]</td>
+                                            <td>Highly compatible with most permissive and GPL licenses; GPL-compliant if derivative work is GPL [13]</td>
+                                        </tr>
+                                        <tr>
+                                            <td>**Apache 2.0**</td>
+                                            <td>Permissive</td>
+                                            <td>Yes [2, 4]</td>
+                                            <td>Explicit [4, 12]</td>
+                                            <td>No [4]</td>
+                                            <td>Retain copyright, patent, trademark, attribution notices; include `NOTICE` file if present [4, 11]</td>
+                                            <td>Compatible with GPLv3 (GPLv3 can include Apache 2.0 code) [8, 18]</td>
+                                        </tr>
+                                        <tr>
+                                            <td>**GNU GPLv3**</td>
+                                            <td>Copyleft</td>
+                                            <td>Yes [8]</td>
+                                            <td>Yes [9]</td>
+                                            <td>Yes (for distributed work) [8, 9]</td>
+                                            <td>Disclose source code, display license/copyright, state changes, name libraries under same license [8]</td>
+                                            <td>Generally compatible with other GPL versions; can include Apache 2.0, but entire work must be GPLv3 [8, 18]</td>
+                                        </tr>
+                                        <tr>
+                                            <td>**BSD 3-Clause**</td>
+                                            <td>Permissive</td>
+                                            <td>Yes [6]</td>
+                                            <td>No [13]</td>
+                                            <td>No [5]</td>
+                                            <td>Include full license text and original copyright notice; prohibits endorsement without permission [5, 6]</td>
+                                            <td>Highly compatible with other permissive and GPL licenses [6]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="pt-4 text-stone-600">This table serves to simplify the often-complex information surrounding open-source licenses, providing a quick, comparative overview that aids stakeholders in understanding the implications of the chosen license for the "King Search Project".[7, 18] By highlighting key differences, such as the explicit patent grant in Apache 2.0 versus the implicit one in MIT [3, 4, 13], the table directly supports the justification for selecting a specific license based on the project's needs, particularly its IP sensitivity. It also explicitly addresses compatibility nuances, such as GPLv3's ability to incorporate Apache 2.0 code while enforcing its own copyleft terms [8, 18], which is a common point of confusion. Ultimately, this table acts as a quick reference for anyone reviewing the project's licensing, from potential users to new contributors, ensuring transparency and clarity on usage rights and obligations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CREDITS.md Section -->
+            <section id="credits-section" class="content-section bg-white p-8 rounded-2xl shadow-lg mb-12">
+                <h2 class="text-4xl font-bold text-stone-800 mb-6">3. CREDITS.md: Acknowledging Contributions and Dependencies</h2>
+                <p class="text-lg text-stone-600 mb-4">The `CREDITS.md` file is a vital component of an open-source project, serving as a central hub for acknowledging all forms of contributions and properly attributing third-party components and data sources. This document is not merely an administrative detail; it is fundamental to the project's integrity and community health.</p>
+
+                <div class="space-y-6">
+                    <!-- Importance of Attribution Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>The Importance of Attribution in Open Source</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Attribution is a core principle of open-source development, serving to acknowledge the creators and sources of work. This practice is essential for building trust within the community, encouraging further contributions, and fulfilling legal obligations stipulated by many open-source licenses.[19] Comprehensive documentation, including detailed credits, also plays a practical role in onboarding new project members by providing context and answering frequently asked questions about the project's origins and dependencies.[15]</p>
+                        </div>
+                    </div>
+
+                    <!-- Acknowledging Project Contributors Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Acknowledging Project Contributors</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">A thriving open-source project relies on a diverse range of contributions that extend far beyond mere code commits. It is crucial to acknowledge all types of work that contribute to the project's success. These contributions can include:</p>
+                            <ul class="list-disc list-inside ml-4 text-stone-600 mt-2">
+                                <li><strong>Code Contributions:</strong> Encompassing the development of major features, critical bug fixes, and significant code refactoring.</li>
+                                <li><strong>Documentation &amp; Tutorials:</strong> The creation and improvement of user guides, API documentation, and the project's `README.md` file.[15, 20]</li>
+                                <li><strong>Community Support:</strong> Activities such as answering user questions on forums, helping with troubleshooting, triaging issues, and moderating community discussions.[20]</li>
+                                <li><strong>Design &amp; UI/UX:</strong> Contributions to the visual aesthetics and interactive experience of the search interface.</li>
+                                <li><strong>Testing &amp; QA:</strong> Efforts in identifying and reporting bugs, as well as writing and executing test cases to ensure software quality.</li>
+                            </ul>
+                            <p class="pt-4 text-stone-600">Best practices for listing contributors involve creating a comprehensive showcase. A dedicated `CREDITS.md` file or a prominent section within the `README.md` can effectively highlight community efforts.[15, 20] To streamline this process and ensure consistent formatting, project maintainers can utilize automation tools like `all-contributors` or `octohatrack`.[20] The formatting should be clear, listing contributors by their names or GitHub handles, along with a brief description of their primary contributions and, optionally, links to their profiles or personal websites. For larger projects, categorizing contributions (e.g., "Core Team," "Major Code Contributors," "Documentation Heroes," "Community Moderators") can enhance readability and recognition.[20, 21] Maintaining transparency and expressing gratitude is also vital; even if a contribution cannot be accepted, acknowledging the effort and thanking the individual fosters goodwill.[22]</p>
+                            <p class="pt-4 text-stone-600">The explicit recognition of all forms of contributions, not just code, is a strategic imperative for cultivating a sustainable and vibrant community. The importance of acknowledging diverse types of work, as highlighted in the provided information [20, 22], underscores that the `CREDITS.md` file serves as more than a legal or historical record. It functions as a powerful tool for community building. By visibly recognizing the efforts of non-code contributors—those who improve documentation, provide user support, or contribute to design—the "King Search Project" can foster a more inclusive and engaged community. This inclusive recognition helps to motivate individuals who contribute in varied capacities, reduces the potential for burnout among core maintainers by encouraging shared responsibility, and creates a more welcoming environment for new talent to join and contribute. This approach transforms `CREDITS.md` from a simple list into a living testament to the collective effort, directly impacting the project's long-term health, innovation potential, and overall appeal.</p>
+                        </div>
+                    </div>
+
+                    <!-- Attributing Third-Party Libraries and Data Sources Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Attributing Third-Party Libraries and Data Sources</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Many open-source licenses, including MIT and Apache, explicitly require the inclusion of original copyright notices and the full license texts when distributing software that incorporates their components.[3, 4, 6, 11, 13] This requirement becomes particularly critical when the "King Search Project" code is compiled into a distributable application, such as a mobile app or a single binary.[23]</p>
+                            <p class="pt-4 text-stone-600">Several methods can be employed for listing these dependencies effectively. For projects using licenses like Apache 2.0, a `NOTICE` file is often required to include additional attribution notes and disclose any significant changes made to the original code.[4, 11, 19] This `NOTICE` file is distinct from the primary `LICENSE` file.[23] A common practice is to create a dedicated `THIRD_PARTY_LICENSES.MD` or `credits.txt` file that comprehensively lists all third-party libraries, their respective licenses, and copyright information.[23] This file can be shipped alongside the software. For applications featuring a user interface, displaying acknowledgments in a dedicated "Third-Party Licenses" or "About" section within the application's settings or legal documentation is an effective and user-friendly approach.[3, 19, 23, 24] Additionally, shorter license notices can be embedded at the top of important source code files, especially for public APIs or widely shared libraries.[3]</p>
+                            <p class="pt-4 text-stone-600">For a search engine, acknowledging data sources is paramount. This includes data utilized for training machine learning models, content indexed for search results, or information obtained from external APIs. When citing data, it is essential to include key citation elements such as the responsible party (e.g., investigator, creator), the title of the dataset, its date of publication, version (if applicable), the name of the data center or repository, any required analysis software, the date the data was accessed, and a persistent identifier like a DOI or URL.[25, 26] Data source provider names should be clearly displayed, ideally directly on the map or application interface where the data is presented, or within an easily accessible "Sources" or "Credits" section.[27] For search results, this might translate to clear attribution displayed alongside results originating from specific data providers.[28] If the "King Search Project" generates or utilizes its own datasets for research or public consumption, considering the inclusion of data availability statements, especially when publishing related research, is a recommended practice.[25]</p>
+                            <p class="pt-4 text-stone-600">The various requirements for attribution, as indicated by the provided information [19, 23, 24, 27], highlight that for a search engine project—which likely integrates numerous third-party libraries and indexes vast amounts of data—managing these obligations is not merely about listing dependencies. It involves actively managing a complex "supply chain" of open-source components and data. Failure to properly attribute can lead to significant legal issues.[18] Therefore, the "King Search Project" requires a systematic and proactive approach. This includes implementing automated dependency scanning tools, such as those mentioned in the research [4], to automatically identify all third-party libraries and their associated licenses during the build process, particularly for distributed applications.[24] A centralized attribution management system, such as a single, comprehensive `THIRD_PARTY_LICENSES.MD` or `NOTICE` file, should be maintained and either dynamically updated or manually curated based on the scan results. Furthermore, the project must determine *where* attribution is most appropriate for each component—for instance, in-app settings for UI libraries, a `NOTICE` file for backend dependencies, or direct on-screen attribution for data sources. This contextual approach ensures compliance without cluttering the user experience. This comprehensive and proactive management of dependencies and data sources elevates the `CREDITS.md` file from a simple acknowledgment list to a critical component of the project's legal risk management and transparency strategy, reflecting a mature approach to open-source development.</p>
+                        </div>
+                    </div>
+
+                    <!-- Structure and Content of CREDITS.md Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Structure and Content of `CREDITS.md`</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">The `CREDITS.md` file should be placed at the root of the repository. It should be structured with clear headings, bullet points, and links for optimal readability.[15, 29]</p>
+                            <h4 class="font-bold text-lg text-stone-800 mb-2 mt-4">Sections within `CREDITS.md`:</h4>
+                            <ul class="list-disc list-inside ml-4 text-stone-600 space-y-1">
+                                <li><strong>Project Contributors:</strong> List core team members, maintainers, and significant individual contributors. Categorize contributions by type (e.g., "Code," "Documentation," "Design," "Community"). Include names or GitHub handles, and optionally, a brief description of their primary contributions or links to their profiles. Example: `[Contributor Name] - ([Link to Profile/Project])`</li>
+                                <li><strong>Third-Party Libraries and Components:</strong> List all external software libraries, frameworks, and tools used in the project. For each component, include: Name, Version, License (e.g., MIT, Apache 2.0), Copyright Holder, and a link to its official repository or license text. Consider a sub-section for components specifically requiring a `NOTICE` file, explicitly stating where that file can be found.</li>
+                                <li><strong>Data Sources:</strong> List all external datasets, APIs, or content sources utilized for indexing, training, or display within the search engine. For each source, include: Source Name, a Description of the Data Used, Date Accessed/Version, a Persistent Identifier (DOI/URL), and any specific attribution text required by the data provider.</li>
+                                <li><strong>Acknowledgments:</strong> Provide general thanks to the broader community, early adopters, bug reporters, and any organizations that have provided support (e.g., through grants or infrastructure).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Table 2 Accordion -->
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Table 2: Key Elements for Third-Party Library Attribution</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="pt-4 table-responsive">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>Element</th>
+                                            <th>Description</th>
+                                            <th>Example / Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Library/Component Name</strong></td>
+                                            <td>The official name of the third-party software.</td>
+                                            <td>`React`, `jQuery`, `Axios`</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Version Used</strong></td>
+                                            <td>The specific version of the library integrated into the project.</td>
+                                            <td>`v18.2.0`, `3.7.1`</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>License Type</strong></td>
+                                            <td>The open-source license under which the component is distributed.</td>
+                                            <td>`MIT License`, `Apache License 2.0`, `BSD 3-Clause` [30]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Copyright Holder(s)</strong></td>
+                                            <td>The entity or individual holding the copyright, as stated in their license.</td>
+                                            <td>`Copyright (c) [Year][Name of Copyright Holder]` [30]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Link to Official Repository/Source</strong></td>
+                                            <td>A direct URL to the component's official GitHub repository or project page.</td>
+                                            <td>`https://github.com/facebook/react`</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Link to Full License Text</strong></td>
+                                            <td>A direct URL to the component's full license text (if not included directly).</td>
+                                            <td>`https://opensource.org/licenses/MIT`</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Notes</strong></td>
+                                            <td>Any additional relevant information, such as specific attribution requirements or the functionality for which it is used.</td>
+                                            <td>`Requires NOTICE file`, `Used for UI rendering` [19, 23]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="pt-4 text-stone-600">This table is designed to provide a structured checklist for ensuring comprehensive and compliant attribution of third-party software components. Many open-source licenses impose specific attribution requirements [3, 4, 6, 11, 13], and this checklist ensures that all necessary information is captured for each dependency, thereby mitigating compliance risks. For a project like a search engine, which may have numerous dependencies, manually tracking attribution can be complex.[4] This table offers a standardized format for recording and reviewing this information, streamlining the management process. Furthermore, it enhances transparency by making it easy for users, auditors, or new contributors to quickly understand the licensing landscape of the project's dependencies, which promotes trust and facilitates their own compliance efforts. The structured format also simplifies the process of reviewing and updating attribution information when dependencies are updated or changed.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LEGAL_COMPLIANCE.md Section -->
+            <section id="compliance-section" class="content-section bg-white p-8 rounded-2xl shadow-lg mb-12">
+                <h2 class="text-4xl font-bold text-stone-800 mb-6">4. LEGAL_COMPLIANCE.md: Navigating the Regulatory Landscape for a Search Project</h2>
+                <p class="text-lg text-stone-600 mb-4">The `LEGAL_COMPLIANCE.md` document serves as a central reference for the "King Search Project"'s adherence to various legal and regulatory requirements. Open-source compliance extends beyond merely satisfying licensing terms; it encompasses adherence to security best practices, internal policies, and a broad spectrum of external regulations.[31] For a search engine, this involves navigating a particularly complex web of legal considerations. A robust compliance program necessitates a clear understanding of applicable requirements, continuous monitoring, and the judicious use of appropriate tools.[31]</p>
+
+                <div class="border-b border-stone-200 mb-6">
+                    <nav id="compliance-tabs" class="-mb-px flex space-x-6" aria-label="Tabs">
+                        <button data-target="data-privacy" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300 active">Data Privacy and Protection</button>
+                        <button data-target="ip-rights" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">Intellectual Property Rights</button>
+                        <button data-target="content-mod" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">Content Moderation & Liability</button>
+                        <button data-target="accessibility" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">Accessibility Compliance</button>
+                    </nav>
+                </div>
+
+                <!-- Data Privacy Tab Content -->
+                <div id="data-privacy" class="tab-content active space-y-6">
+                    <p class="text-lg text-stone-600">The "King Search Project" is designed with a **privacy-first approach** where user data is handled **locally on the user's device** and is **not collected or stored on any central servers or databases controlled by the project.** This significantly simplifies data privacy considerations compared to search engines that collect and process user data centrally.</p>
+                    
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Core Principles for Local Data Handling</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <ul class="list-disc list-inside ml-4 text-stone-600 pt-4 space-y-1">
+                                <li><strong>No Central Data Collection:</strong> The "King Search Project" does **not** collect, transmit, or store any personal user data (such as search queries, IP addresses, browsing history, or personal identifiers) on its own servers or third-party databases.</li>
+                                <li><strong>Local Storage Only:</strong> Any user data, such as search history, preferences, or settings, is stored **exclusively on the user's local device** (e.g., in a specific folder on their PC). This data remains under the user's direct control.</li>
+                                <li><strong>User Control:</strong> Users have full control over any locally stored data. They can view, modify, or delete this data directly from their device at any time, without requiring interaction with project servers.</li>
+                                <li><strong>No Data Sharing:</strong> Since no personal data is collected centrally, there is no sharing or selling of user data with third parties by the "King Search Project."</li>
+                                <li><strong>Data Minimization by Design:</strong> By adopting a local-only data model, the project inherently adheres to the principle of data minimization, as only the user controls and retains their data on their own machine.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Implications for GDPR and CCPA (EU/California, US)</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Given that "King Search Project" does not centrally collect, store, or process personal data, many of the typical GDPR and CCPA requirements related to server-side data handling (e.g., explicit consent for server-side processing, data access requests to a central entity, "Do Not Sell My Personal Information" links for data sales) are **not applicable** to the project's operations.</p>
+                            <p class="pt-4 text-stone-600">However, the project remains committed to the *spirit* of these regulations by ensuring:</p>
+                            <ul class="list-disc list-inside ml-4 text-stone-600 mt-2 space-y-1">
+                                <li><strong>Transparency:</strong> A clear and easily accessible privacy statement (which can be part of this `LEGAL_COMPLIANCE.md` or a separate `PRIVACY_POLICY.md` file) that explicitly states the local-only data handling model.</li>
+                                <li><strong>User Empowerment:</strong> Users are fully empowered to manage their own data on their devices.</li>
+                                <li><strong>No Tracking:</strong> The project does not employ mechanisms to track users across the web or collect their personal information for advertising or other purposes.</li>
+                            </ul>
+                            <p class="pt-4 text-stone-600">The absence of central data collection is a fundamental privacy feature of the "King Search Project." This design choice proactively mitigates the vast majority of legal and compliance risks associated with data privacy regulations like GDPR and CCPA, as these laws primarily target entities that collect, process, and control personal data. By ensuring that all user data remains on the user's device, the project avoids the complex web of obligations related to cross-border data transfers, data processing agreements, and large-scale data breach notification requirements. This simplifies the compliance burden, enhances user trust, and provides a clear differentiator in the market by offering a truly private search experience. The project's commitment to local-only data storage is a strategic decision that embeds privacy into its core architecture rather than treating it as an add-on compliance measure.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Table 3: Data Privacy Compliance Checklist for Search Engines (Local Data Model)</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="pt-4 table-responsive">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>Requirement Area</th>
+                                            <th>General Principle (for any software)</th>
+                                            <th>Specific Application for "King Search Project" (Local Data Model)</th>
+                                            <th>Compliance Benefit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Transparency</strong></td>
+                                            <td>Clear, accessible privacy policy detailing processing [33, 34]</td>
+                                            <td>**Explicitly disclose that no personal data is collected or stored on project servers; all data handling is local to user's device.**</td>
+                                            <td>Builds trust, clarifies data model to users.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Consent</strong></td>
+                                            <td>Explicit consent for personal data, cookie banners (if tracking) [34, 36]</td>
+                                            <td>**Not applicable for server-side data collection.** If local storage requires consent (e.g., for specific browser APIs), ensure user notification.</td>
+                                            <td>Simplicity, reduced compliance overhead.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>User Rights</strong></td>
+                                            <td>Access, rectification, erasure, data portability [32, 34]</td>
+                                            <td>Users retain full control of their data on their local device; provide clear guidance on how users can manage/delete local data.</td>
+                                            <td>User empowerment, inherent compliance with rights.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Data Security</strong></td>
+                                            <td>Secure processing, encryption, backups [34, 36, 38]</td>
+                                            <td>Guidance for users on securing their own devices; project code designed to prevent unauthorized local data access.</td>
+                                            <td>Promotes user security habits; project code integrity.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Data Minimization</strong></td>
+                                            <td>Collect only necessary data for specified purposes [34, 35]</td>
+                                            <td>**Inherently minimized**, as data exists only on user's device and is not aggregated.</td>
+                                            <td>Strong privacy posture by design.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Opt-Out Mechanisms</strong></td>
+                                            <td>Cookie preferences, "Do Not Sell My Personal Information" link [35, 39, 40]</td>
+                                            <td>**Not applicable for central data sale/sharing.** User can simply delete local data or uninstall.</td>
+                                            <td>Direct user control, no complex opt-out needed.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Penalties</strong></td>
+                                            <td>Significant fines for non-compliance [36, 40]</td>
+                                            <td>**Significantly reduced risk** due to no central data collection/processing; focuses on transparent communication.</td>
+                                            <td>Major risk mitigation for the project.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="pt-4 text-stone-600">This table provides a practical checklist for the "King Search Project" to ensure adherence to data privacy principles within its local-only data model. It explicitly reinterprets standard data privacy requirements [34, 35, 39] in the context of a software that does not collect personal data centrally. This structured overview clarifies that while many typical compliance complexities are avoided, the project must still maintain high transparency and empower users regarding their locally stored data. The checklist helps the project focus its compliance efforts on clear communication and robust local data management practices, ensuring a strong privacy stance and significantly mitigating risks associated with data handling.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intellectual Property Tab Content -->
+                <div id="ip-rights" class="tab-content space-y-6">
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">Intellectual Property Rights in Search Engine Operations</h3>
+                    <p class="text-lg text-stone-600 mb-4">Search engines inherently interact extensively with copyrighted and trademarked content, necessitating meticulous intellectual property (IP) management.</p>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Copyright Infringement (Indexing, Caching, Fair Use)</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Search engines create copies of web content (caching) to index it for search purposes. The legality of this practice often hinges on whether these temporary copies are considered "fixed" enough to constitute reproduction under copyright law and if the "fair use" doctrine applies.[43] Generally, indexing publicly available content for search purposes is considered fair use, particularly if the content is transformed (e.g., from raw HTML into search results or abstracts) and does not create a competing product.[43, 44] Websites can explicitly prohibit crawling or scraping in their Terms of Service or by utilizing `robots.txt` files.[45] Search engines must respect these directives to avoid potential legal issues such as trespass to chattel or breach of contract.[45] As an online service provider (OSP) that hosts user-generated content (e.g., search results that link to external content), "King Search Project" should implement a Digital Millennium Copyright Act (DMCA) policy. This involves designating a DMCA agent with the U.S. Copyright Office and establishing clear notice-and-takedown procedures for copyright holders to request the removal of infringing content.[46, 47] Compliance with these provisions can shield the OSP from monetary liability.[46]</p>
+                            <p class="pt-4 text-stone-600">The core functionality of a search engine involves copying and indexing vast amounts of content [43], which inherently places it in close proximity to intellectual property law, particularly copyright. The concept of "fair use" [43, 44] is critical but is also highly contextual and frequently subject to litigation. The existence of `robots.txt` files and website Terms of Service [45] provides explicit mechanisms for content owners to opt-out of indexing. Therefore, the "King Search Project" cannot passively index content; it must actively manage its crawling behavior to respect these boundaries. Implementing robust `robots.2xt` parsing and adherence to Terms of Service are not merely technical features but fundamental legal safeguards. Furthermore, the DMCA framework [46, 47] becomes a crucial operational component for handling inevitable infringement claims, requiring dedicated resources and clear internal procedures. This highlights a continuous legal risk management challenge inherent in search engine operations, where the core functionality of indexing directly intersects with complex intellectual property rights.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Trademark Infringement</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Search engines may display or link to content that infringes upon trademarks (e.g., unauthorized use of protected brand names or logos). Intellectual property owners can contact search engines to request the removal of such infringing results.[48] Therefore, "King Search Project" should establish a clear policy and procedure for addressing trademark infringement claims.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Patent Considerations</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Beyond the project's own license (Apache 2.0), the search engine's operations might involve interaction with patented technologies, potentially from third-party services or components. While the Apache 2.0 license grants patent licenses for the *project's own code*, it does not necessarily extend to cover external patented technologies. Patent infringement searches can assist in identifying unauthorized uses of protected technologies.[48]</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Table 4: Intellectual Property Considerations for Search Engine Indexing</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="pt-4 table-responsive">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>IP Type</th>
+                                            <th>Relevance to Search Engine</th>
+                                            <th>Key Legal Principle/Defense</th>
+                                            <th>Action for "King Search Project"</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Copyright</strong></td>
+                                            <td>Indexing web content, caching, displaying snippets/abstracts [43]</td>
+                                            <td>Fair Use Doctrine [43, 44], `robots.txt` [45], Terms of Service [45], DMCA Safe Harbors [46]</td>
+                                            <td>Implement DMCA Takedown procedures; respect `robots.txt` and website TOS; ensure indexing aligns with fair use principles [44, 45, 47]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Trademark</strong></td>
+                                            <td>Displaying brand names, logos in search results, ad content [48]</td>
+                                            <td>Trademark Law, Dilution, Infringement [48]</td>
+                                            <td>Establish policy for addressing trademark infringement claims; provide clear reporting mechanism for brand owners [48]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Patent</strong></td>
+                                            <td>Using search algorithms, data processing methods, or features that may be patented by others [48]</td>
+                                            <td>Apache 2.0 Patent Grant (for project's own code) [4, 12], Patent Infringement Searches [48]</td>
+                                            <td>Conduct due diligence on third-party components for patent risks; ensure project's own innovations are protected by chosen license [48]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="pt-4 text-stone-600">This table serves to summarize the various intellectual property types and their implications for a search engine's core operations. Search engines operate within a complex IP environment [43, 48], and this table provides a structured overview of the different IP rights and how they intersect with search engine functionality. It highlights the specific IP risks associated with indexing, caching, and displaying content, such as copyright and trademark infringement. For each IP type, the table suggests concrete actions or policies that "King Search Project" should implement, such as establishing DMCA procedures or respecting `robots.txt` directives, effectively translating abstract legal concepts into actionable steps. This structured approach also serves as a concise educational tool for developers and project managers, fostering a heightened awareness of the IP implications of their work.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Moderation Tab Content -->
+                <div id="content-mod" class="tab-content space-y-6">
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">Content Moderation and Intermediary Liability</h3>
+                    <p class="text-lg text-stone-600 mb-4">As a platform that surfaces content (search results), the "King Search Project" may face questions regarding its responsibility for the content it displays. In the United States, **Section 230 of the Communications Decency Act** provides significant legal protection. This law shields interactive computer service providers, including search engines, from liability for content posted by third parties and for their good-faith content moderation decisions.[49, 50] This provision acts as a critical legal shield for online platforms. While protected by Section 230, adhering to best practices suggests maintaining transparency in content moderation policies and practices.[49, 50] This entails clearly outlining what types of content are considered objectionable (e.g., illegal content, spam, misinformation) and how "King Search Project" intends to handle such content if it appears in search results.</p>
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Implications for Content Moderation</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">While Section 230 offers substantial liability protection for search engines concerning third-party content [49, 50], the public and legal landscape surrounding content moderation is in constant evolution. Section 230 protects against liability for *publishing* content, but it does not necessarily extend to protecting against liability for *promoting* or *amplifying* certain types of content, such as illegal or harmful material. For the "King Search Project," this implies that merely relying on Section 230 might not be sufficient for long-term legal and reputational stability. The project should consider developing internal guidelines for how search results are ranked, filtered, or de-indexed, especially for sensitive queries. This proactive approach to content policy, even if not explicitly mandated by Section 230, contributes significantly to the project's ethical standing and user trust. By demonstrating a commitment to responsible content curation, the project can potentially preempt future regulatory scrutiny or public backlash, fostering a more trusted and sustainable platform.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accessibility Tab Content -->
+                <div id="accessibility" class="tab-content space-y-6">
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">Accessibility Compliance for Search Applications</h3>
+                    <p class="text-lg text-stone-600 mb-4">Ensuring accessibility is not only an ethical imperative but also a legal requirement under various regulations, such as the Americans with Disabilities Act (ADA) in the US, and international standards like the Web Content Accessibility Guidelines (WCAG). Websites and mobile applications are increasingly recognized as places of public accommodation under ADA Title III, mandating their accessibility to individuals with disabilities.[51, 52] WCAG 2.2, developed by the World Wide Web Consortium (W3C), serves as the international standard for web accessibility and forms the basis for legislation in many countries.[52]</p>
+                    
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Adherence to WCAG (POUR Principles)</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">Adherence to WCAG is guided by four core principles, often remembered by the acronym POUR:</p>
+                            <ul class="list-disc list-inside ml-4 text-stone-600 mt-2 space-y-1">
+                                <li><strong>Perceivable:</strong> Information and user interface components must be presented to users in ways they can perceive. This includes providing alternative text for images, captions for multimedia, and text alternatives for non-text content.[51]</li>
+                                <li><strong>Operable:</strong> User interface components and navigation must be operable. This means ensuring full keyboard accessibility, a logical tab order, and sufficient touch target sizes for mobile interfaces.[51]</li>
+                                <li><strong>Understandable:</strong> Information and the operation of the user interface must be understandable. This involves using readable text, predictable navigation, clear form labels, and descriptive error messages.[51]</li>
+                                <li><strong>Robust:</strong> Content must be robust enough to be interpreted reliably by a wide variety of user agents, including assistive technologies. This is achieved through the use of semantic HTML, Accessible Rich Internet Applications (ARIA) labels, and general compatibility with screen readers.[51]</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Specific Application for Search Interface</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="pt-4 text-stone-600">For the "King Search Project," specific implementation considerations for search interfaces are crucial. The **search bar** must have proper labels (`&lt;label&gt;` or `aria-labelledby`), clear instructions, and support accessible autocorrect or suggestions.[51] **Search results** should be clearly structured using semantic HTML, with headings, links, and snippets perceivable by screen readers. Pagination and filtering options must be keyboard-navigable and clearly labeled. In terms of **error handling**, messages such as "no results found" should be descriptive and announced to assistive technologies.[51] **Visual design** must ensure sufficient color contrast, text resizing capabilities, and responsive design to accommodate various screen sizes.[51]</p>
+                            <p class="pt-4 text-stone-600">"King Search Project" should publish an **Accessibility Statement** on its website, prominently linked (e.g., in the footer).[53] This statement should detail the project's commitment to accessibility, list any known limitations or inaccessible areas, and provide workarounds or alternative options.[53] It should also include clear contact information for users to report accessibility barriers and outline a formal complaint procedure for Section 508 violations.[53]</p>
+                            <p class="pt-4 text-stone-600">While accessibility compliance is clearly a legal and ethical imperative [51, 52], a deeper consideration for the "King Search Project" reveals that it also presents a significant competitive advantage and directly influences search engine optimization (SEO). Search engines tend to favor accessible sites [51], meaning that by building an accessible search application, "King Search Project" itself is more likely to achieve higher rankings and better online visibility. Furthermore, making the search interface accessible expands the potential user base to include individuals with disabilities, who represent a substantial demographic (e.g., 1 in 4 U.S. adults have a disability [51]). This transforms accessibility from merely a compliance burden into a strategic investment that enhances the user experience for everyone, broadens market reach, and significantly improves the project's overall discoverability and reputation.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-200 py-4">
+                        <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                            <span>Table 5: Web Accessibility (WCAG/ADA) Checklist for Search Applications</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="pt-4 table-responsive">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>WCAG Principle</th>
+                                            <th>Key Guideline</th>
+                                            <th>Specific Application for Search Interface</th>
+                                            <th>Compliance Benefit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Perceivable</strong></td>
+                                            <td>Text Alternatives [51]</td>
+                                            <td>Alt text for search icons; captions for any multimedia in results; text summaries for complex result layouts</td>
+                                            <td>Legal risk reduction, expanded audience [51]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Operable</strong></td>
+                                            <td>Keyboard Navigation [51]</td>
+                                            <td>All interactive elements (search bar, filters, results links) operable via keyboard; logical tab order for navigation</td>
+                                            <td>Improved usability for all users, legal compliance [51]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Understandable</strong></td>
+                                            <td>Clear Language &amp; Predictable Navigation [51]</td>
+                                            <td>Clear form labels for search input; descriptive error messages (e.g., "No results found"); consistent layout of search results</td>
+                                            <td>Reduced user frustration, enhanced user experience [51]</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Robust</strong></td>
+                                            <td>Semantic Markup &amp; AT Compatibility [51]</td>
+                                            <td>Use semantic HTML for search results (e.g., `&lt;article&gt;`, `&lt;nav&gt;`); ARIA labels for dynamic content updates (e.g., loading indicators)</td>
+                                            <td>Compatibility with screen readers and assistive technologies, improved SEO [51]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="pt-4 text-stone-600">This table provides a practical checklist for ensuring the "King Search Project" search interface is accessible to users with disabilities, aligning with WCAG and ADA standards. It translates abstract WCAG guidelines [51] into concrete, actionable steps specifically tailored for a search application's interface. This structured approach offers a systematic way to review and implement accessibility features, ensuring comprehensive coverage across the POUR principles. Moreover, it reinforces that accessibility is not merely a legal obligation but also a strategic advantage, as it enhances user experience for all and boosts SEO.[51] Developers can utilize this as a direct checklist during the design, implementation, and testing phases to ensure the search application meets high accessibility standards.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Structure and Content of LEGAL_COMPLIANCE.md Accordion -->
+                <div class="border-b border-stone-200 py-4">
+                    <button class="accordion-toggle w-full flex justify-between items-center text-left text-xl font-semibold text-stone-700" aria-expanded="false">
+                        <span>Structure and Content of `LEGAL_COMPLIANCE.md`</span><span class="accordion-icon text-blue-500 text-2xl">▾</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="pt-4 text-stone-600">The `LEGAL_COMPLIANCE.md` file should be placed at the root of the repository. It should begin with clear general disclaimers, stating that the document provides general guidance and is not legal advice, and advising users to consult legal professionals for specific situations.</p>
+                        <h4 class="font-bold text-lg text-stone-800 mb-2 mt-4">Sections within `LEGAL_COMPLIANCE.md`:</h4>
+                        <ul class="list-disc list-inside ml-4 text-stone-600 space-y-1">
+                            <li><strong>Introduction to Legal Compliance:</strong> Explain the project's commitment to operating within legal and ethical frameworks.</li>
+                            <li><strong>Open Source License Compliance:</strong> Briefly reference `LICENSE.md` and reiterate the project's chosen license (Apache 2.0) and its implications for both users and contributors.</li>
+                            <li><strong>Data Privacy and Protection:</strong> Outline the project's approach to user data handling. Summarize key GDPR and CCPA considerations relevant to a search engine, focusing on the local-only data model. Reference the full Privacy Policy if it is hosted separately on a project website.</li>
+                            <li><strong>Intellectual Property Rights:</strong> Address copyright considerations related to indexing and caching web content, including the application of fair use, adherence to `robots.txt` directives, and compliance with website Terms of Service. Outline the project's DMCA notice-and-takedown procedures and the designated DMCA agent. Discuss considerations related to trademarks and the project's policy for addressing trademark infringement claims. Briefly mention patent considerations that extend beyond the project's own license.</li>
+                            <li><strong>Content Moderation and Intermediary Liability:</strong> Explain the project's stance on content moderation, referencing protections like Section 230 of the Communications Decency Act. Briefly describe the project's policies for handling objectionable content that may appear in search results.</li>
+                            <li><strong>Accessibility Compliance:</strong> State the project's commitment to ADA and WCAG standards. Outline the key accessibility principles (POUR) applied to the search interface design and development. Reference the full Accessibility Statement if it is hosted separately on a project website.</li>
+                            <li><strong>Reporting Legal Concerns:</strong> Provide clear contact information and established procedures for users or third parties to report any legal issues, such as copyright infringement or privacy violations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion and Next Steps Section -->
+            <section id="conclusion-section" class="content-section bg-white p-8 rounded-2xl shadow-lg">
+                <h2 class="text-4xl font-bold text-stone-800 mb-6">5. Conclusion and Next Steps</h2>
+                <p class="text-lg text-stone-600 mb-4">The successful and sustainable development of the "King Search Project" hinges on a robust foundation of legal and attribution documentation. Based on the analysis, the project should adopt the **Apache License 2.0** for its comprehensive patent grant and commercial friendliness, supported by a formal Contributor License Agreement (CLA) or Developer Certificate of Origin (DCO) to ensure legal clarity for all contributions. A comprehensive `CREDITS.md` file is essential for acknowledging all forms of contributions—from code to documentation and community support—and for meticulously listing all third-party libraries and data sources with appropriate attribution. Furthermore, the `LEGAL_COMPLIANCE.md` document must address the unique and complex legal landscape of a search engine, focusing on stringent data privacy measures (adhering to GDPR and CCPA), careful navigation of intellectual property rights in indexing content, transparent content moderation policies, and full adherence to web accessibility standards (ADA and WCAG).</p>
+                <p class="text-lg text-stone-600 mb-4">Legal compliance is not a static achievement but an ongoing process that requires continuous vigilance and adaptation. The "King Search Project" must establish mechanisms for regular reviews and updates of its legal documentation, particularly as new features are integrated, dependencies evolve, or legal regulations shift. This includes:</p>
+                <ul class="list-disc list-inside ml-4 text-stone-600 space-y-1">
+                    <li>Periodic review and update of the `LICENSE.md` file, especially if dependencies change licenses or new versions are adopted.</li>
+                    <li>Continuous updating of `CREDITS.md` to reflect new contributors and any changes in third-party components or data sources.</li>
+                    <li>Regular monitoring of evolving data privacy laws and intellectual property precedents to ensure that `LEGAL_COMPLIANCE.md` remains current and effective.</li>
+                    <li>Leveraging automated tools for license scanning [31] and accessibility checks [52] can significantly aid in maintaining this continuous compliance posture.</li>
+                    <li>Maintaining an open dialogue with the project community and seeking expert legal counsel for any ambiguities or emerging challenges.</li>
+                </ul>
+                <p class="text-lg text-stone-600 mt-4">The emphasis on "monitoring and ongoing compliance" [31, 35, 40] and "continuous improvement and iteration" [54] underscores that these legal documents are not merely static files. Instead, they are living artifacts that reflect the project's evolving governance and its unwavering commitment to legal and ethical standards. For a dynamic and complex project like a search engine, the legal landscape is in constant flux, with new privacy laws and AI-related intellectual property challenges continually emerging. Therefore, the "King Search Project" must embed legal compliance deeply into its development lifecycle, treating these documents as integral parts of its continuous integration/continuous delivery (CI/CD) pipeline and overall governance model. This necessitates assigning clear responsibilities for updates, establishing regular review cycles, and potentially integrating automated checks to ensure that the documentation accurately reflects the project's current state and its legal obligations. This proactive, integrated approach to legal documentation transforms it from a perceived burden into a core component of sustainable open-source development, demonstrating maturity and foresight in managing a complex technological endeavor.</p>
+            </section>
+        </main>
+
+        <footer class="bg-stone-800 text-white py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-stone-400 text-sm">&copy; 2025 MD Asaduzzaman Sarkar. All rights reserved.</p>
+                <div class="mt-4 space-x-4 text-sm">
+                    <a href="#" class="text-stone-400 hover:text-blue-500 transition-colors">Privacy Policy</a>
+                    <span class="text-stone-600">|</span>
+                    <a href="#" class="text-stone-400 hover:text-blue-500 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mainNavButtons = document.querySelectorAll('header .nav-button');
+            const mobileNav = document.getElementById('mobile-nav');
+            const contentSections = document.querySelectorAll('main .content-section');
+            const complianceTabs = document.querySelectorAll('#compliance-tabs .tab-button');
+            const complianceTabContents = document.querySelectorAll('#compliance-section .tab-content');
+
+            // Function to handle main navigation
+            function switchMainTab(targetId) {
+                mainNavButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.target === targetId);
+                });
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', section.id === targetId);
+                });
+                if (mobileNav.value !== targetId) {
+                    mobileNav.value = targetId;
+                }
+                // Scroll to the top of the newly active section for better UX
+                const activeSection = document.getElementById(targetId);
+                if (activeSection) {
+                    activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                // If switching to compliance section, ensure the default tab is active
+                if (targetId === 'compliance-section') {
+                    const defaultTab = document.querySelector('#compliance-tabs .tab-button.active') || document.querySelector('#compliance-tabs .tab-button');
+                    if (defaultTab) {
+                        switchComplianceTab(defaultTab.dataset.target);
+                    }
+                }
+            }
+
+            mainNavButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    switchMainTab(button.dataset.target);
+                });
+            });
+
+            mobileNav.addEventListener('change', (e) => {
+                switchMainTab(e.target.value);
+            });
+
+            // Function to handle compliance sub-tabs
+            function switchComplianceTab(targetId) {
+                complianceTabs.forEach(t => t.classList.remove('active'));
+                const activeTabButton = document.querySelector(`#compliance-tabs .tab-button[data-target="${targetId}"]`);
+                if (activeTabButton) {
+                    activeTabButton.classList.add('active');
+                }
+                
+                complianceTabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === targetId);
+                });
+            }
+
+            complianceTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    switchComplianceTab(tab.dataset.target);
+                });
+            });
+
+            // Setup accordions
+            function setupAccordion(containerSelector) {
+                const accordionContainer = document.querySelector(containerSelector);
+                if (!accordionContainer) return;
+
+                const toggles = accordionContainer.querySelectorAll('.accordion-toggle');
+                toggles.forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        const content = toggle.nextElementSibling;
+                        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+                        // Close other accordions in the same direct container to prevent multiple open
+                        // This applies to accordions directly under .space-y-6 or tab-content
+                        let currentParent = toggle.closest('.space-y-6, .tab-content');
+                        if (currentParent) {
+                            currentParent.querySelectorAll('.accordion-toggle').forEach(otherToggle => {
+                                if (otherToggle !== toggle && otherToggle.getAttribute('aria-expanded') === 'true') {
+                                    otherToggle.setAttribute('aria-expanded', 'false');
+                                    otherToggle.nextElementSibling.style.maxHeight = '0';
+                                }
+                            });
+                        }
+
+                        // Toggle current accordion
+                        toggle.setAttribute('aria-expanded', !isExpanded);
+                        if (isExpanded) {
+                            content.style.maxHeight = '0';
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                        }
+                    });
+                });
+            }
+
+            // Apply accordions to all relevant sections
+            setupAccordion('#license-section .space-y-6');
+            setupAccordion('#credits-section .space-y-6');
+            setupAccordion('#data-privacy.tab-content');
+            setupAccordion('#ip-rights.tab-content');
+            setupAccordion('#content-mod.tab-content');
+            setupAccordion('#accessibility.tab-content');
+            setupAccordion('#compliance-section > .space-y-6'); /* For the overall compliance structure section */
+            setupAccordion('#compliance-section > div:last-child'); // For the Legal_Compliance structure section if it's not nested in a tab
+
+            // Initial setup: activate introduction and default compliance tab
+            switchMainTab('introduction');
+            switchComplianceTab('data-privacy'); // Ensure default tab is active on load
+        });
+    </script>
+
+</body>
+</html>
